@@ -16,21 +16,21 @@ module.exports = {
   },
 };
 
-module.exports = {
-  devServer: {
-    proxy: {
-      "^/api": {
-        target: "https://product-api-sw.herokuapp.com",
-        changeOrigin: true,
-        logLevel: "debug",
-        pathRewrite: {
-          "^/api": "/",
-        },
-      },
-    },
-  },
-};
+// module.exports = {
+//   devServer: {
+//     proxy: {
+//       "^/api": {
+//         target: "https://product-api-sw.herokuapp.com",
+//         changeOrigin: true,
+//         logLevel: "debug",
+//         pathRewrite: {
+//           "^/api": "/",
+//         },
+//       },
+//     },
+//   },
+// };
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === "production" ? "/REPO_NAME/" : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "/scandiwen-vue/" : "/",
 };

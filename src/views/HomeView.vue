@@ -23,21 +23,26 @@ export default {
     let products = ref([]);
 
     const getProducts = async () => {
-      const res = await fetch("api/api/product/read.php");
+      const res = await fetch(
+        "https://product-api-sw.herokuapp.com/api/product/read.php"
+      );
       const data = await res.json();
 
       products.value = data.data;
     };
     const massDelete = async () => {
-      const res = await fetch("api/api/product/delete.php", {
-        method: "DELETE",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          products: Object.values(checkedProducts.value),
-        }),
-      });
+      const res = await fetch(
+        "https://product-api-sw.herokuapp.com/api/product/delete.php",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify({
+            products: Object.values(checkedProducts.value),
+          }),
+        }
+      );
       const data = await res.json();
       getProducts();
     };

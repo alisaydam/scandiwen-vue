@@ -182,14 +182,17 @@ export default {
       };
 
       if (!this.v$.$error) {
-        const res = await fetch("api/api/product/create.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(product),
-        });
+        const res = await fetch(
+          "https://product-api-sw.herokuapp.com/api/product/create.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(product),
+          }
+        );
         const data = await res.json();
         if (data.success) {
           // this.state.SKU = "";
