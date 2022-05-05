@@ -13,7 +13,6 @@
 <script>
 import Products from "../components/Products";
 import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { ref, onMounted } from "vue";
 
 export default {
@@ -63,7 +62,9 @@ export default {
     Navbar,
   },
   methods: {
-    addProduct() {},
+    addProduct() {
+      this.$router.push("/add-product");
+    },
   },
 };
 </script>

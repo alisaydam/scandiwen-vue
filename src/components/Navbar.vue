@@ -5,8 +5,8 @@
     </h3>
     <ul class="nav-lists" id="menu">
       <li class="nav-items">
-        <a class="link" @click="$emit('leftEvent')">
-          <router-link to="/add-product">{{ leftItem }}</router-link>
+        <a class="link" href="#" @click="$emit('leftEvent')">
+          {{ leftItem }}
         </a>
       </li>
       <li class="nav-items">
