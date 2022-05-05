@@ -1,0 +1,248 @@
+<template>
+  <Navbar
+    title="Product Add"
+    rightItem="Cancel"
+    leftItem="Save"
+    @rightEvent="rightEvent"
+    @leftEvent="createProduct"
+  />
+  <div class="container">
+    <form id="product_form" action="">
+      <div>
+        <label for="SKU"> SKU</label>
+        <input type="text" id="sku" name="sku" required v-model="state.SKU" />
+        <span v-if="v$.SKU.$error">{{ v$.SKU.$errors[0].$message }}</span>
+      </div>
+      <div>
+        <label for="name"> Name</label>
+        <input type="text" id="name" name="name" required v-model="state.name" />
+        <span v-if="v$.name.$error">{{ v$.name.$errors[0].$message }}</span>
+      </div>
+
+      <div>
+        <label for="price"> Price ($)</label>
+        <input type="number" id="price" name="price" required v-model="state.price" />
+        <span v-if="v$.price.$error">{{ v$.price.$errors[0].$message }}</span>
+      </div>
+      <div>
+        <label for="productType">Choose a Product:</label>
+        <select id="productType" name="productType" v-model="state.productType">
+          <option id="DVD" value="DVD">DVD</option>
+          <option id="Book" value="Book">Book</option>
+          <option id="Furniture" value="Furniture">Furniture</option>
+        </select>
+        <span v-if="v$.productType.$error">{{ v$.productType.$errors[0].$message }}</span>
+      </div>
+      <div v-if="state.productType === 'DVD'">
+        <label for="size"> Size (MB)</label>
+        <input type="number" id="size" name="size" v-model="state.size" />
+        <span v-if="v$.size.$error">{{ v$.size.$errors[0].$message }}</span>
+        <span>{{ state.size ? "" : "Please, provide size" }}</span>
+      </div>
+      <div v-if="state.productType === 'Book'">
+        <label for="weight"> Weight (kg)</label>
+        <input type="number" id="weight" name="weight" v-model="state.weight" />
+        <span v-if="v$.weight.$error">{{ v$.weight.$errors[0].$message }}</span>
+        <span>{{ state.weight ? "" : "Please, provide weight" }}</span>
+      </div>
+      <div class="fur-con" v-if="state.productType === 'Furniture'">
+        <div>
+          <label for="number"> Height (CM)</label>
+          <input type="number" id="height" name="height" v-model="state.height" />
+          <span v-if="v$.height.$error">{{ v$.height.$errors[0].$message }}</span>
+          <span>{{ state.height ? "" : "Please, provide height" }}</span>
+        </div>
+
+        <div>
+          <label for="width"> Width (CM)</label>
+          <input type="number" id="width" name="width" v-model="state.width" />
+          <span v-if="v$.width.$error">{{ v$.width.$errors[0].$message }}</span>
+          <span>{{ state.width ? "" : "Please, provide width" }}</span>
+        </div>
+
+        <div>
+          <label for="length"> Length (CM)</label>
+          <input type="number" id="length" name="length" v-model="state.length" />
+          <span v-if="v$.length.$error">{{ v$.length.$errors[0].$message }}</span>
+          <span>{{ state.length ? "" : "Please, provide length" }}</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+<script>
+import Navbar from "@/components/Navbar";
+import { reactive, computed } from "vue";
+import useVuelidate from "@vuelidate/core";
+import { required, numeric, requiredIf, helpers, minLength } from "@vuelidate/validators";
+
+export default {
+  name: "ProductForm",
+  setup() {
+    const state = reactive({
+      SKU: "",
+      name: "",
+      price: "",
+      productType: "DVD",
+      size: "",
+      weight: "",
+      height: "",
+      width: "",
+      length: "",
+    });
+    const rules = computed(() => {
+      return {
+        SKU: {
+          required: helpers.withMessage("SKU is reqired", required),
+        },
+        name: {
+          required: helpers.withMessage("Name is reqired", required),
+        },
+        price: {
+          required: helpers.withMessage("Price is reqired", required),
+        },
+        productType: { required },
+        size: {
+          required: requiredIf(function () {
+            if (state.productType === "DVD") {
+              return true;
+            } else {
+              return false;
+            }
+          }),
+          numeric,
+        },
+        weight: {
+          required: requiredIf(function () {
+            if (state.productType === "Book") {
+              return true;
+            } else {
+              return false;
+            }
+          }),
+          numeric,
+        },
+        height: {
+          required: requiredIf(function () {
+            if (state.productType === "Furniture") {
+              return true;
+            } else {
+              return false;
+            }
+          }),
+          numeric,
+        },
+        width: {
+          required: requiredIf(function () {
+            if (state.productType === "Furniture") {
+              return true;
+            } else {
+              return false;
+            }
+          }),
+          numeric,
+        },
+        length: {
+          required: requiredIf(function () {
+            if (state.productType === "Furniture") {
+              return true;
+            } else {
+              return false;
+            }
+          }),
+          numeric,
+        },
+      };
+    });
+
+    const v$ = useVuelidate(rules, state);
+
+    return {
+      state,
+      v$,
+    };
+  },
+
+  methods: {
+    rightEvent() {
+      this.$router.push("/");
+    },
+    async createProduct() {
+      this.v$.$validate();
+
+      const product = {
+        SKU: this.state.SKU,
+        name: this.state.name,
+        price: this.state.price,
+        productType: this.state.productType,
+        attribute:
+          this.state.size ||
+          this.state.weight ||
+          `${this.state.height}x${this.state.width}x${this.state.length}`,
+      };
+
+      if (!this.v$.$error) {
+        const res = await fetch("api/api/product/create.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(product),
+        });
+        const data = await res.json();
+        if (data.success) {
+          // this.state.SKU = "";
+          // this.state.name = "";
+          // this.state.price = "";
+          // this.state.productType = "DVD";
+          // this.state.size = "";
+          // this.state.weight = "";
+          // this.state.height = "";
+          // this.state.width = "";
+          // this.state.length = "";
+          this.$router.push("/");
+        }
+      } else {
+        alert("error");
+      }
+    },
+  },
+  components: {
+    Navbar,
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding-top: 50px;
+
+  form {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      position: relative;
+
+      span {
+        position: absolute;
+        right: 0;
+        top: 25px;
+        font-size: 10px;
+        color: red;
+      }
+    }
+
+    .fur-con {
+      flex-direction: column;
+    }
+  }
+}
+</style>
