@@ -5,12 +5,14 @@
     </h3>
     <ul class="nav-lists" id="menu">
       <li class="nav-items">
-        <a class="link" href="#" @click="$emit('leftEvent')">
+        <button class="link" href="#" @click="$emit('leftEvent')">
           {{ leftItem }}
-        </a>
+        </button>
       </li>
       <li class="nav-items">
-        <a class="link" href="#" @click="$emit('rightEvent')">{{ rightItem }}</a>
+        <button class="link" href="#" @click="$emit('rightEvent')">
+          {{ rightItem }}
+        </button>
       </li>
     </ul>
   </nav>
@@ -54,12 +56,13 @@ nav {
       box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.75);
       border: 2px black solid;
       margin-left: 10px;
-      a {
+      button {
         // color: $primary-color;
-        text-decoration: none;
-        position: relative;
         // font-weight: map-get($font-weights, regular);
-        padding: 20px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 10px;
       }
     }
     :hover {
