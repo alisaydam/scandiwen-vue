@@ -2,6 +2,8 @@
   <Navbar
     title="Product List"
     leftItem="ADD"
+    rightID="delete-product-btn"
+    leftID="add-product-btn"
     rightItem="MASS DELETE"
     @rightEvent="massDelete"
     @leftEvent="addProduct"

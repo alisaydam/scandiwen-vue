@@ -5,12 +5,12 @@
     </h3>
     <ul class="nav-lists" id="menu">
       <li class="nav-items">
-        <button type="button" @click="$emit('leftEvent')">
+        <button :id="leftID" @click="$emit('leftEvent')">
           {{ leftItem }}
         </button>
       </li>
       <li class="nav-items">
-        <button type="button" @click="$emit('rightEvent')">
+        <button :id="rightID" @click="$emit('rightEvent')">
           {{ rightItem }}
         </button>
       </li>
@@ -25,6 +25,8 @@ export default {
     title: String,
     rightItem: String,
     leftItem: String,
+    rightID: "",
+    leftID: "",
   },
 };
 </script>
