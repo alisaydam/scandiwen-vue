@@ -5,14 +5,10 @@
     </h3>
     <ul class="nav-lists" id="menu">
       <li class="nav-items">
-        <button @click="$emit('leftEvent')">
-          {{ leftItem }}
-        </button>
+        <button @click="$emit('leftEvent')">ADD</button>
       </li>
       <li class="nav-items">
-        <button @click="$emit('rightEvent')">
-          {{ rightItem }}
-        </button>
+        <button @click="$emit('rightEvent')">MASS DELETE</button>
       </li>
     </ul>
   </nav>
