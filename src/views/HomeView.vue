@@ -6,8 +6,6 @@
     @rightEvent="massDelete"
     @leftEvent="addProduct"
   />
-  <button>ADD</button>
-  <button>MASS DELETE</button>
   <Products v-model:value="checkedProducts" :products="products" />
   <!-- <div class="mt-4 text-gray-800 font-bold">{{ checkedProducts }}</div> -->
 </template>
