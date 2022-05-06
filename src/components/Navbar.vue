@@ -5,12 +5,12 @@
     </h3>
     <ul class="nav-lists" id="menu">
       <li class="nav-items">
-        <button href="#" @click="$emit('leftEvent')">
+        <button @click="$emit('leftEvent')">
           {{ leftItem }}
         </button>
       </li>
       <li class="nav-items">
-        <button href="#" @click="$emit('rightEvent')">
+        <button @click="$emit('rightEvent')">
           {{ rightItem }}
         </button>
       </li>
