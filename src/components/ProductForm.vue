@@ -36,34 +36,34 @@
       <div v-if="state.productType === 'DVD'">
         <label for="size"> Size (MB)</label>
         <input type="number" id="size" name="size" v-model="state.size" />
-        <span v-if="v$.size.$error">{{ v$.size.$errors[0].$message }}</span>
+        <!-- <span v-if="v$.size.$error">{{ v$.size.$errors[0].$message }}</span> -->
         <span>{{ state.size ? "" : "Please, provide size" }}</span>
       </div>
       <div v-if="state.productType === 'Book'">
         <label for="weight"> Weight (kg)</label>
         <input type="number" id="weight" name="weight" v-model="state.weight" />
-        <span v-if="v$.weight.$error">{{ v$.weight.$errors[0].$message }}</span>
+        <!-- <span v-if="v$.weight.$error">{{ v$.weight.$errors[0].$message }}</span> -->
         <span>{{ state.weight ? "" : "Please, provide weight" }}</span>
       </div>
       <div class="fur-con" v-if="state.productType === 'Furniture'">
         <div>
           <label for="number"> Height (CM)</label>
           <input type="number" id="height" name="height" v-model="state.height" />
-          <span v-if="v$.height.$error">{{ v$.height.$errors[0].$message }}</span>
+          <!-- <span v-if="v$.height.$error">{{ v$.height.$errors[0].$message }}</span> -->
           <span>{{ state.height ? "" : "Please, provide height" }}</span>
         </div>
 
         <div>
           <label for="width"> Width (CM)</label>
           <input type="number" id="width" name="width" v-model="state.width" />
-          <span v-if="v$.width.$error">{{ v$.width.$errors[0].$message }}</span>
+          <!-- <span v-if="v$.width.$error">{{ v$.width.$errors[0].$message }}</span> -->
           <span>{{ state.width ? "" : "Please, provide width" }}</span>
         </div>
 
         <div>
           <label for="length"> Length (CM)</label>
           <input type="number" id="length" name="length" v-model="state.length" />
-          <span v-if="v$.length.$error">{{ v$.length.$errors[0].$message }}</span>
+          <!-- <span v-if="v$.length.$error">{{ v$.length.$errors[0].$message }}</span> -->
           <span>{{ state.length ? "" : "Please, provide length" }}</span>
         </div>
       </div>
@@ -195,19 +195,10 @@ export default {
         );
         const data = await res.json();
         if (data.success) {
-          // this.state.SKU = "";
-          // this.state.name = "";
-          // this.state.price = "";
-          // this.state.productType = "DVD";
-          // this.state.size = "";
-          // this.state.weight = "";
-          // this.state.height = "";
-          // this.state.width = "";
-          // this.state.length = "";
           this.$router.push("/");
         }
       } else {
-        alert("error");
+        return;
       }
     },
   },

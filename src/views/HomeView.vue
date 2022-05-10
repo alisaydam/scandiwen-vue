@@ -32,19 +32,15 @@ export default {
       products.value = data.data;
     };
     const massDelete = async () => {
-      const res = await fetch(
-        "https://product-api-sw.herokuapp.com/api/product/delete.php",
-        {
-          method: "DELETE",
-          mode: "cors",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify({
-            products: Object.values(checkedProducts.value),
-          }),
-        }
-      );
+      const res = await fetch("http://localhost/product_api/api/product/delete.php", {
+        method: "DELETE",
+        headers: {
+          "Content-type": "application/json;",
+        },
+        body: JSON.stringify({
+          products: Object.values(checkedProducts.value),
+        }),
+      });
       const data = await res.json();
       getProducts();
     };
