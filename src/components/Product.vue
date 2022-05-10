@@ -68,6 +68,7 @@ export default {
     position: absolute;
     left: 10px;
     top: 10px;
+    cursor: pointer;
   }
 }
 </style>

@@ -36,6 +36,7 @@ export default {
         "https://product-api-sw.herokuapp.com/api/product/delete.php",
         {
           method: "DELETE",
+          mode: "cors",
           headers: {
             "Content-type": "application/json",
           },
